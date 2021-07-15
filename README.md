@@ -10,8 +10,11 @@
 ### 安装
 
 1.打包 ldap 文件夹为 ldap.zip 文件
+
 2.创建文件：
+
 touch /www/zentaopms/www/ok.txt
+
 3.admin 账户登陆禅道，后台 -> 插件 -> 本地安装，选择打包的 ldap.zip 文件安装即可
 
 ### 配置示例
