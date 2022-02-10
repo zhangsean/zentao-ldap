@@ -19,6 +19,8 @@ touch /www/zentaopms/www/ok.txt
 
 ### 配置示例
 
+使用uid作为登录域账号账户
+
 |  选项   | 示例值  |
 |  ----  | ----  |
 | LDAP服务器  | 	ldap://192.168.32.203:389 |
@@ -27,6 +29,19 @@ touch /www/zentaopms/www/ok.txt
 | BindDN 密码  | ou=users,dc=mylitboy,dc=com |
 | Search filter  | (objectClass=person) |
 | 账号字段  | 	uid |
+| EMail 字段  | 	mail |
+| 姓名字段  | 	cn |
+
+使用SamAccountName作为登录域账号账户
+
+|  选项   | 示例值  |
+|  ----  | ----  |
+| LDAP服务器  | 	ldap://192.168.32.203:389 |
+| 协议版本  | 3 |
+| BindDN  | cn=admin,dc=mylitboy,dc=com |
+| BindDN 密码  | ou=users,dc=mylitboy,dc=com |
+| Search filter  | (objectClass=person) |
+| 账号字段  | 	samaccountname |
 | EMail 字段  | 	mail |
 | 姓名字段  | 	cn |
 
