@@ -16,10 +16,11 @@ class ldapModel extends model
         $ret = '';
     	$ds = ldap_connect($host);
     	if ($ds) {
-    		ldap_set_option($ds,LDAP_OPT_PROTOCOL_VERSION,3);
+    		ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
     		ldap_bind($ds, $dn, $pwd);
 
             $ret = ldap_error($ds);
+            ldap_unbind($ds);
     		ldap_close($ds);
     	}  else {
             $ret = ldap_error($ds);
@@ -27,20 +28,32 @@ class ldapModel extends model
 
     	return $ret;
     }
-    public function getUserDn($config, $account){
+    public function getUserDn($config, $account)
+    {
+        $ret = $this->getUser($config, $account);
+        if ($ret) {
+            return $ret['dn'];
+        }
+        return null;
+    }
+    public function getUser($config, $account)
+    {
         $ret = null;
         $ds = ldap_connect($config->host);
         if ($ds) {
-            ldap_set_option($ds,LDAP_OPT_PROTOCOL_VERSION,3);
+            ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
             ldap_bind($ds, $config->bindDN, $config->bindPWD);
             $filter = "($config->uid=$account)";
+            if ($config->searchFilter) {
+                $filter = "(&$config->searchFilter($config->uid=$account))";
+            }
+            
             $rlt = ldap_search($ds, $config->baseDN, $filter);
-            $count=ldap_count_entries($ds, $rlt);
+            $count = ldap_count_entries($ds, $rlt);
 
-            if($count > 0){
+            if ($count > 0) {
                 $data = ldap_get_entries($ds, $rlt);
-                $ret = $data[0]['dn'];
-                $str = serialize($data);
+                $ret = $data[0];
             }
 
             ldap_unbind($ds);
@@ -50,6 +63,7 @@ class ldapModel extends model
     }
     public function getUsers($config)
     {
+        $ret = null;
         $ds = ldap_connect($config->host);
         if ($ds) {
             ldap_set_option($ds,LDAP_OPT_PROTOCOL_VERSION,3);
@@ -58,8 +72,9 @@ class ldapModel extends model
             $attrs = [$config->uid, $config->mail, $config->name];
 
             $rlt = ldap_search($ds, $config->baseDN, $config->searchFilter, $attrs);
-            $data = ldap_get_entries($ds, $rlt);
-            return $data;
+            $ret = ldap_get_entries($ds, $rlt);
+            ldap_unbind($ds);
+            ldap_close($ds);
         }
 
         return null;

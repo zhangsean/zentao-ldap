@@ -1,5 +1,5 @@
 ---
-name: 禅道开源版 12.3 LDAP插件
+name: 禅道开源版 16.3 LDAP插件
 code: ldap
 type: extension
 site: https://github.com/shynome/zentao-ldap
