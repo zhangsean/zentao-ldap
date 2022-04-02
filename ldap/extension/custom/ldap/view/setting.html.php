@@ -9,9 +9,9 @@
  * @version     $Id$
  * @link        http://www.zentao.net
  */
-include '../../common/view/header.html.php';
 ?>
-<div class='container mw-700px'>
+<?php include $app->getModuleRoot() . 'common/view/header.html.php';?>
+<div id='mainContent' class='main-content'>
   <div id='titlebar'>
     <div class='heading'>
       <span class='prefix'><?php echo html::icon($lang->icons['mail']);?></span>
@@ -66,15 +66,15 @@ include '../../common/view/header.html.php';
       </tr>
       <tr>
         <th class='w-p25'><?php echo $lang->ldap->group; ?></th>
-		<td class='w-p50'><?php echo html::select('group', $groupList, (!empty($group) ? $group : ''), "class='form-control chosen'");?></td>
-		<td><?php echo $lang->ldap->placeholder->group;?></td>
+		    <td class='w-p50'><?php echo html::select('group', $groupList, (!empty($group) ? $group : ''), "class='form-control chosen'");?></td>
+		    <td><?php echo $lang->ldap->placeholder->group;?></td>
       </tr>
       <tr>
         <td class='w-p25'></td>
         <td class="text-center">
           <?php 
           echo html::submitButton($lang->ldap->save);
-          echo html::commonButton($lang->ldap->sync, 'onclick="javascript:sync()"');
+          // echo html::commonButton($lang->ldap->sync, 'onclick="javascript:sync()"');
           ?>
         </td>
       </tr>
@@ -82,4 +82,4 @@ include '../../common/view/header.html.php';
     </table>
   </form>
 </div>
-<?php include '../../common/view/footer.html.php';?>
+<?php include $app->getModuleRoot() . 'common/view/footer.html.php';?>

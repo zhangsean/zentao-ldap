@@ -11,17 +11,17 @@
  */
 $lang->ldap->common 		= "LDAP";
 $lang->ldap->setting    	= "Setting";
-$lang->ldap->host 			= 'LDAP Host:  ';
-$lang->ldap->version 		= 'Protocol Version:  ';
-$lang->ldap->bindDN 		= 'BindDN:  ';
-$lang->ldap->password 		= 'BindDN Password:  ';
-$lang->ldap->baseDN 		= 'BaseDN:  ';
-$lang->ldap->filter 		= 'Search filter:  ';
-$lang->ldap->attributes 	= 'Account Attribute:  ';
+$lang->ldap->host 			= 'LDAP Host:';
+$lang->ldap->version 		= 'Protocol Version:';
+$lang->ldap->bindDN 		= 'BindDN:';
+$lang->ldap->password 		= 'BindDN Password:';
+$lang->ldap->baseDN 		= 'BaseDN:';
+$lang->ldap->filter 		= 'Search filter:';
+$lang->ldap->attributes 	= 'Account Attribute:';
 $lang->ldap->sync 			= 'Sync';
 $lang->ldap->save 			= 'Save';
-$lang->ldap->test 			= 'Connect Test';
-$lang->ldap->mail 			= 'EMail:';
+$lang->ldap->test 			= 'Connection Test';
+$lang->ldap->mail 			= 'Email:';
 $lang->ldap->name  			= 'Name Attrubte:';
 $lang->ldap->group  			= 'Default Group:';
 

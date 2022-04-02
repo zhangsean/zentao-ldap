@@ -1,5 +1,5 @@
 ---
-name: 禅道开源版 16.3 LDAP插件
+name: 禅道开源版 16.5 LDAP插件
 code: ldap
 type: extension
 site: https://github.com/shynome/zentao-ldap
@@ -11,7 +11,6 @@ desc: >
   2.在LDAP配置页面可以测试是否能够正常连接LDAP服务器
   3.保存配置后，点击“手动同步”按钮，从LDAP服务器上同步用户信息
   4.同步用户信息以后，可以使用LDAP用户登录禅道
-  5.本地用户，通过在账户名称前加“$”符号来登录禅道
 install: |
   1. 通过禅道的插件管理来进行安装。
     1.1 使用管理员身份登录禅道，访问插件管理。

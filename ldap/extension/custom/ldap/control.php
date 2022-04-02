@@ -38,9 +38,10 @@ class ldap extends control
             $groupList[$group->id] = $group->name;
         }
 	
-        $this->view->title      = $this->lang->ldap->common . $this->lang->colon . $this->lang->ldap->setting;
+        $this->view->title      = $this->lang->ldap->common;
         $this->view->position[] = html::a(inlink('index'), $this->lang->ldap->common);
         $this->view->position[] = $this->lang->ldap->setting;
+        // $this->view->position[] = $this->lang->ldap->common;
 
 		$this->view->group  = $this->config->ldap->group; // 用于显示权限分组选项，供用户自行选择
 		$this->view->groupList  = $groupList;
@@ -80,29 +81,30 @@ class ldap extends control
             fwrite($file, $ldapConfig); 
             fclose($file); 
 
-            $this->locate(inlink('setting'));        
+            $this->locate(inlink('setting'));
         }
     }
 
     public function test()
     {
-        echo $this->ldap->identify($this->post->host, $this->post->dn, $this->post->pwd);
+        if ($this->ldap->identify($this->post->host, $this->post->dn, $this->post->pwd)) {
+            echo '测试成功';
+        } else {
+            echo '测试失败';
+        }
     }
 
     public function sync()
     {  
-        $users = $this->ldap->sync2db($this->config->ldap);
-        echo $users;
+        $count = $this->ldap->sync2db($this->config->ldap);
+        echo $count;
     }
 
-    public function identify($user, $pwd)
+    public function identify($user, $password)
     {
         $ret = false;
-        $account = $this->config->ldap->uid.'='.$user.','.$this->config->ldap->baseDN;
-        if (0 == strcmp('Success', $this->ldap->identify($this->config->ldap->host, $account, $pwd))) {
-            $ret = true;
-        }
-
+        $dn = $this->config->ldap->uid.'='.$user.','.$this->config->ldap->baseDN;
+        $ret = $this->ldap->identify($this->config->ldap->host, $dn, $password);
         echo $ret;
     }
 }
