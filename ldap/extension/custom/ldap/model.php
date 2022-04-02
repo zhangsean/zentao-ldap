@@ -27,25 +27,9 @@ class ldapModel extends model
     public function getUserDn($config, $account)
     {
         $ret = false;
-        $ds = ldap_connect($config->host) or die("Could not connect to LDAP server.");
-        if ($ds) {
-            ldap_set_option($ds, LDAP_OPT_REFERRALS, 0);
-            ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
-            $bind = ldap_bind($ds, $config->bindDN, $config->bindPWD);
-            if ($bind) {
-                $filter = "($config->uid=$account)";
-                if ($config->searchFilter) {
-                    $filter = "(&$config->searchFilter $filter)";
-                }
-
-                $rlt = ldap_search($ds, $config->baseDN, $filter);
-                if ($rlt) {
-                    $first = ldap_first_entry($ds, $rlt);
-                    $ret = ldap_get_dn($ds, $first);
-                }
-            }
-
-            ldap_unbind($ds);
+        $ldapUser = $this->getUser($config, $account);
+        if ($ldapUser) {
+            $ret = $ldapUser['dn'];
         }
         return $ret;
     }
@@ -60,12 +44,16 @@ class ldapModel extends model
             if ($bind) {
                 $filter = "($config->uid=$account)";
                 if ($config->searchFilter) {
-                    $filter = "(&$config->searchFilter $filter)";
+                    $filter = "(&" . $config->searchFilter . $filter. ")";
                 }
 
                 $rlt = ldap_search($ds, $config->baseDN, $filter);
                 if ($rlt) {
-                    $ret = ldap_first_entry($ds, $rlt);
+                    $count = ldap_count_entries($ds, $rlt);
+                    if ($count > 0) {
+                        $entries = ldap_get_entries($ds, $rlt);
+                        $ret = $entries[0];
+                    }
                 }
             }
 

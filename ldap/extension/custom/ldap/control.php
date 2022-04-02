@@ -99,12 +99,4 @@ class ldap extends control
         $count = $this->ldap->sync2db($this->config->ldap);
         echo $count;
     }
-
-    public function identify($user, $password)
-    {
-        $ret = false;
-        $dn = $this->config->ldap->uid.'='.$user.','.$this->config->ldap->baseDN;
-        $ret = $this->ldap->identify($this->config->ldap->host, $dn, $password);
-        echo $ret;
-    }
 }
