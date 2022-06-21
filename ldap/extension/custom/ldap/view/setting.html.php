@@ -74,7 +74,7 @@
         <td class="text-center">
           <?php 
           echo html::submitButton($lang->ldap->save);
-          // echo html::commonButton($lang->ldap->sync, 'onclick="javascript:sync()"');
+          echo html::commonButton($lang->ldap->sync, 'onclick="javascript:sync()"');
           ?>
         </td>
       </tr>

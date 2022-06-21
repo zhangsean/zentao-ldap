@@ -60,3 +60,14 @@ touch /www/zentaopms/www/ok.txt
   - 问: 连接是 ok 但是同步了 0 位用户
   - 答: 这种情况的话, 保存设置后再点击手动同步就可以正常同步(<del>原来的版本就有的问题懒得改了</del>) 
     <br/>注意: 所有的字段都是需要填写的
+
+### 更新
+
+将作者仓库的 33 个 fork 逐一对比合并，并在 17.0 上测试，没有问题，主要合并更新有如下：
+
++ ShoJinto/zentao-ldap
++ breezemit/zentao-ldap
++ lengyf/zentao-ldap
++ yihoyoung/zentao-ldap
+
+其中 lengyf 提供的 16.5 适配思路可以在 17.0 上成功使用，但是其优化代码导致登录失败，ldap 用户同步每次只能同步 1 个，而且没有返回导致 alert 弹窗没有统计

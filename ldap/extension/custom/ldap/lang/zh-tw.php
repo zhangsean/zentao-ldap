@@ -21,11 +21,11 @@ $lang->ldap->attributes 	= '账号字段:';
 $lang->ldap->sync 			= '手动同步';
 $lang->ldap->save 			= '保存设置';
 $lang->ldap->test 			= '测试连接';
-$lang->ldap->mail 			= '邮箱字段:';
+$lang->ldap->mail 			= '郵箱字段:';
 $lang->ldap->name  			= '姓名字段:';
 $lang->ldap->group  			= '默認許可權:';
 
-$lang->ldap->placeholder->group 	= '為從ldap同步過來的用戶添加一個默認許可權';
+$lang->ldap->placeholder->group 	= '為從 LDAP 同步過來的用戶添加一個默認許可權';
 
 $lang->ldap->methodOrder[5] = 'index';
 $lang->ldap->methodOrder[10] = 'setting';

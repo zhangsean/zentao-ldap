@@ -14,8 +14,8 @@ class ldap extends control
     public $referer;
 
     /**
-     * Construct 
-     * 
+     * Construct
+     *
      * @access public
      * @return void
      */
@@ -29,26 +29,25 @@ class ldap extends control
         $this->locate(inlink('setting'));
     }
 
-    public function setting() 
+    public function setting()
     {
-    	$groups    = $this->dao->select('id, name, role')->from(TABLE_GROUP)->fetchAll();
+        $groups    = $this->dao->select('id, name, role')->from(TABLE_GROUP)->fetchAll();
         $groupList = array('' => '');
         foreach($groups as $group)
         {
             $groupList[$group->id] = $group->name;
         }
-	
-        $this->view->title      = $this->lang->ldap->common;
+
+        $this->view->title      = $this->lang->ldap->common . $this->lang->colon . $this->lang->ldap->setting;
         $this->view->position[] = html::a(inlink('index'), $this->lang->ldap->common);
         $this->view->position[] = $this->lang->ldap->setting;
-        // $this->view->position[] = $this->lang->ldap->common;
 
-		$this->view->group  = $this->config->ldap->group; // 用于显示权限分组选项，供用户自行选择
-		$this->view->groupList  = $groupList;
+        $this->view->group  = $this->config->ldap->group; // 用于显示权限分组选项，供用户自行选择
+        $this->view->groupList  = $groupList;
 
         $this->display();
     }
- 
+
     public function save()
     {
         if (!empty($_POST)) {
@@ -65,21 +64,21 @@ class ldap extends control
 
             // 此处我们把配置写入配置文件
             $ldapConfig = "<?php \n"
-                          ."\$config->ldap = new stdclass();\n"
-                          ."\$config->ldap->host = '{$this->post->ldapHost}';\n"
-                          ."\$config->ldap->version = '{$this->post->ldapVersion}';\n"
-                          ."\$config->ldap->bindDN = '{$this->post->ldapBindDN}';\n"
-                          ."\$config->ldap->bindPWD = '{$this->post->ldapPassword}';\n"
-                          ."\$config->ldap->baseDN = '{$this->post->ldapBaseDN}';\n"
-                          ."\$config->ldap->searchFilter = '{$this->post->ldapFilter}';\n"
-                          ."\$config->ldap->uid = '{$this->post->ldapAttr}';\n"
-                          ."\$config->ldap->mail = '{$this->post->ldapMail}';\n"
-                          ."\$config->ldap->name = '{$this->post->ldapName}';\n"
-                          ."\$config->ldap->group = '{$this->post->group}';\n";
+                ."\$config->ldap = new stdclass();\n"
+                ."\$config->ldap->host = '{$this->post->ldapHost}';\n"
+                ."\$config->ldap->version = '{$this->post->ldapVersion}';\n"
+                ."\$config->ldap->bindDN = '{$this->post->ldapBindDN}';\n"
+                ."\$config->ldap->bindPWD = '{$this->post->ldapPassword}';\n"
+                ."\$config->ldap->baseDN = '{$this->post->ldapBaseDN}';\n"
+                ."\$config->ldap->searchFilter = '{$this->post->ldapFilter}';\n"
+                ."\$config->ldap->uid = '{$this->post->ldapAttr}';\n"
+                ."\$config->ldap->mail = '{$this->post->ldapMail}';\n"
+                ."\$config->ldap->name = '{$this->post->ldapName}';\n"
+                ."\$config->ldap->group = '{$this->post->group}';\n";
 
             $file = fopen("config.php", "w") or die("Unable to open file!");
-            fwrite($file, $ldapConfig); 
-            fclose($file); 
+            fwrite($file, $ldapConfig);
+            fclose($file);
 
             $this->locate(inlink('setting'));
         }
@@ -87,16 +86,23 @@ class ldap extends control
 
     public function test()
     {
-        if ($this->ldap->identify($this->post->host, $this->post->dn, $this->post->pwd)) {
-            echo '测试成功';
-        } else {
-            echo '测试失败';
-        }
+        echo $this->ldap->identify($this->post->host, $this->post->dn, $this->post->pwd);
     }
 
     public function sync()
-    {  
-        $count = $this->ldap->sync2db($this->config->ldap);
-        echo $count;
+    {
+        $users = $this->ldap->sync2db($this->config->ldap);
+        echo $users;
+    }
+
+    public function identify($user, $pwd)
+    {
+        $ret = false;
+        $account = $this->config->ldap->uid.'='.$user.','.$this->config->ldap->baseDN;
+        if (0 == strcmp('Success', $this->ldap->identify($this->config->ldap->host, $account, $pwd))) {
+            $ret = true;
+        }
+
+        echo $ret;
     }
 }

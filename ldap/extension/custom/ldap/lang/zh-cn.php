@@ -26,7 +26,7 @@ $lang->ldap->mail 			= '邮箱字段:';
 $lang->ldap->name  			= '姓名字段:';
 $lang->ldap->group  			= '默认权限:';
 
-$lang->ldap->placeholder->group 	= '为从LDAP同步过来的用户添加一个默认权限';
+$lang->ldap->placeholder->group 	= '为从 LDAP 同步过来的用户添加一个默认权限';
 
 $lang->ldap->methodOrder[5] = 'index';
 $lang->ldap->methodOrder[10] = 'setting';
